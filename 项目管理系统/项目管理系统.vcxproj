@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Authentivation.cpp" />
+    <ClCompile Include="GitHubUploader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ProjectManagement.cpp" />
     <ClCompile Include="ProjectSorting.cpp" />
