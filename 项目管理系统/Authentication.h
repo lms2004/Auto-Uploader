@@ -10,8 +10,6 @@
 /**
  * AuthenticationService 类用于管理用户认证。
  * 包括注册新用户、用户登录、密码加密和解密以及用户信息的存取。
- *
- * 注意：本示例使用文件系统存储用户信息，实际应用中推荐使用数据库系统。
  */
 class AuthenticationService {
 public:
@@ -50,7 +48,6 @@ private:
 
     /**
      * 从文件系统加载用户信息。
-     * 实际应用应根据使用的数据库调整此函数。
      */
     void loadUsersFromFile();
 
