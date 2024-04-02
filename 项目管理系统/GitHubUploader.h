@@ -23,10 +23,10 @@ public:
     /**
      * 上传目标项目文件夹到GitHub。
      *
-     * @param folderPath 要上传的项目文件夹路径。
-     * @return 上传成功返回true，否则返回false。
+     *   @param folderPath 要上传的项目文件夹路径。
+     *   @return 上传成功返回true，否则返回false。
      *
-     * 开发注意事项：实际的上传操作需要使用GitHub API或Git命令。这可能涉及到调用外部命令或使用第三方库。
+     *    开发注意事项：  实际的上传操作需要使用GitHub API或Git命令。这可能涉及到调用外部命令或使用第三方库。
      */
     bool uploadProjectFolderToGitHub(const std::string& folderPath);
 
