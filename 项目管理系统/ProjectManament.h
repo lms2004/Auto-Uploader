@@ -57,19 +57,4 @@ public:
     void updateProjectGrade(Project& project, float newGrade);
 };
 
-bool ProjectManagement::shallowCopyProjectFolder(const std::filesystem::path& sourcePath, const std::filesystem::path& destinationPath) {
-    // 实现浅拷贝逻辑
-    // 注意检查路径有效性和处理可能的文件系统异常
-}
-
-bool ProjectManagement::deleteProjectFolder(const std::filesystem::path& path) {
-    // 实现删除文件夹逻辑
-    // 注意处理可能的文件系统异常
-}
-
-void ProjectManagement::updateProjectGrade(Project& project, float newGrade) {
-    // 实现更新项目成绩逻辑
-    // 可以在这里添加成绩有效性检查
-}
-
 #endif // PROJECT_MANAGEMENT_H
