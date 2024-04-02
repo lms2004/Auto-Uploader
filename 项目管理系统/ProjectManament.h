@@ -45,16 +45,6 @@ public:
      * 开发时需注意异常处理，确保路径有效且指向一个文件夹。
      */
     bool deleteProjectFolder(const std::filesystem::path& path);
-
-    /**
-     * 修改项目成绩。
-     *
-     * @param project 项目对象引用。
-     * @param newGrade 新的成绩。
-     *
-     * 开发时需确保成绩在合理范围内（例如0到100）。
-     */
-    void updateProjectGrade(Project& project, float newGrade);
 };
 
 #endif // PROJECT_MANAGEMENT_H

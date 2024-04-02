@@ -54,5 +54,15 @@ public:
      * 开发注意事项：每个项目的成绩将乘以其类型对应的权重系数。
      */
     void adjustGradesByTypeWeight(std::vector<Project>& projects, const std::unordered_map<std::string, float>& typeWeights);
+    
+     /**
+     * 修改项目成绩。
+     *
+     * @param project 项目对象引用。
+     * @param newGrade 新的成绩。
+     *
+     * 开发时需确保成绩在合理范围内（例如0到100）。
+     */
+     void updateProjectGrade(Project& project, float newGrade);
 };
 #endif // PROJECT_SORTING_H
