@@ -38,5 +38,8 @@
     <ClCompile Include="ProjectSorting.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectManagement.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
