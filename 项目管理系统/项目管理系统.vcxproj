@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Authentivation.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ProjectManagement.cpp" />
     <ClCompile Include="ProjectSorting.cpp" />
   </ItemGroup>
   <ItemGroup>
