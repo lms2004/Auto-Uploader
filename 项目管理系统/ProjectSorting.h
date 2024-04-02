@@ -55,17 +55,4 @@ public:
      */
     void adjustGradesByTypeWeight(std::vector<Project>& projects, const std::unordered_map<std::string, float>& typeWeights);
 };
-
-std::vector<Project> ProjectSorting::sortAndPickTopByType(const std::vector<Project>& projects) {
-    // 实现排序和选择逻辑
-}
-
-std::vector<Project> ProjectSorting::deduplicateByTypeAndGrade(const std::vector<Project>& projects) {
-    // 实现去重逻辑
-}
-
-void ProjectSorting::adjustGradesByTypeWeight(std::vector<Project>& projects, const std::unordered_map<std::string, float>& typeWeights) {
-    // 实现成绩调整逻辑
-}
-
 #endif // PROJECT_SORTING_H
