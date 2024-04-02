@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Userdata">
+      <UniqueIdentifier>{b61ebcec-d05b-43d9-9801-48afba08fffc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Authentication.h">
@@ -38,5 +41,11 @@
     <ClCompile Include="ProjectSorting.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Authentivation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="userdata.txt" />
   </ItemGroup>
 </Project>
