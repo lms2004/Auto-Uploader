@@ -1,10 +1,13 @@
 #ifndef AUTHENTICATION_SERVICE_H
 #define AUTHENTICATION_SERVICE_H
 
-#include <string>
-#include <unordered_map>
-#include <fstream>
 #include <iostream>
+#include <fstream>
+#include <unordered_map>
+#include <sstream>
+#include <string>
+#include <openssl/sha.h>
+#include <openssl/rand.h>
 // #include "SomeHashLibrary.h" // 示例：引入用于密码加密的库
 
 /**
@@ -57,13 +60,21 @@ private:
      */
     void saveUsersToFile();
 
+
+    /**
+    * 生成一个随机的盐值，并将其以十六进制的形式返回。
+    * 在密码存储过程中，盐值的作用是增加密码的复杂度。
+    * 使得相同的密码在不同用户之间存储的哈希值也不同，增加了破解的难度。
+    */
+    std::string generateSalt();
+    
     /**
      * 对密码进行加密。
      *
      * @param password 明文密码。
      * @return 加密后的密码。
      */
-    std::string hashPassword(const std::string& password);
+    std::string hashPassword(const std::string& password,const ::string& salt);
 
     /**
      * 对密码进行解密（如果需要）。
@@ -71,7 +82,7 @@ private:
      * @param hashedPassword 加密后的密码。
      * @return 解密后的密码。
      */
-    std::string decryptPassword(const std::string& hashedPassword); // 根据需要实现
+    std::string decryptPassword(const std::string&password,const std::string& salt); // 根据需要实现
 };
 
 #endif // AUTHENTICATION_SERVICE_H
