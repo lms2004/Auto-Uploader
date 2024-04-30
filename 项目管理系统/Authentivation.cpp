@@ -2,19 +2,19 @@
 #include <iostream>
 using namespace std;
 
-void AuthenticationService::AuthenticationService()
+AuthenticationService::AuthenticationService()
 {
-
+	;
 }
 
 // 用于验证用户登录。首先检查用户是否存在，然后对比用户输入的密码经过哈希后与保存的密码是否一致，如果一致则登录成功。
 bool AuthenticationService::login(const std::string& username, const std::string& password)
 {
 	auto it = users.find(username);
-	if (it != user.end())
+	if (it != users.end())
 	{
 		//用户存在，检查密码
-		return it->second == hashPassword(password);
+		return it->second == hashPassword(password,"salt");
 	}
 	return false;
 }
@@ -25,7 +25,7 @@ bool AuthenticationService::registerUser(const std::string& username, const std:
 	//用户名不存在，可以注册
 	if (users.find(username) == users.end())
 	{
-		users[username] = hashPassword(password);
+		users[username] = hashPassword(password, "salt");
 		saveUsersToFile();//更新外部文件
 		return true;
 	}
