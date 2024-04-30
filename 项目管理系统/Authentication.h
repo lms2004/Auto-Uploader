@@ -6,8 +6,11 @@
 #include <unordered_map>
 #include <sstream>
 #include <string>
-#include <openssl/sha.h>
-#include <openssl/rand.h>
+#include "openssl/md5.h"
+#include "openssl/sha.h"
+#include "openssl/des.h"
+#include "openssl/rsa.h"
+#include "openssl/pem.h"
 
 // #include "SomeHashLibrary.h" // 示例：引入用于密码加密的库
 
