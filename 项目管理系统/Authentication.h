@@ -66,7 +66,7 @@ private:
     * 在密码存储过程中，盐值的作用是增加密码的复杂度。
     * 使得相同的密码在不同用户之间存储的哈希值也不同，增加了破解的难度。
     */
-    std::string generateSalt();
+    std::vector<unsigned char> generateSalt(size_t length);
     
     /**
      * 对密码进行加密。
@@ -74,15 +74,8 @@ private:
      * @param password 明文密码。
      * @return 加密后的密码。
      */
-    std::string hashPassword(const std::string& password,const ::string& salt);
+    std::string hashPassword(const std::string& password);
 
-    /**
-     * 对密码进行解密（如果需要）。
-     *
-     * @param hashedPassword 加密后的密码。
-     * @return 解密后的密码。
-     */
-    std::string decryptPassword(const std::string&password,const std::string& salt); // 根据需要实现
 };
 
 #endif // AUTHENTICATION_SERVICE_H
