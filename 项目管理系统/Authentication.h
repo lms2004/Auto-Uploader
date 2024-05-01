@@ -11,6 +11,7 @@
 //引入用于密码加密的库
 #include <openssl/evp.h> 
 #include <openssl/rand.h> 
+#include <openssl/sha.h>
 
 
 /**
