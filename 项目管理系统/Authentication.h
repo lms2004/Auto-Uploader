@@ -3,12 +3,15 @@
 
 #include <iostream>
 #include <fstream>
-#include <unordered_map>
 #include <sstream>
 #include <string>
-#include <openssl/sha.h>
-#include <openssl/rand.h>
-// #include "SomeHashLibrary.h" // 示例：引入用于密码加密的库
+#include <unordered_map>
+#include <vector>
+
+//引入用于密码加密的库
+#include <openssl/evp.h> 
+#include <openssl/rand.h> 
+
 
 /**
  * AuthenticationService 类用于管理用户认证。
