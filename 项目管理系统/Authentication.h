@@ -16,7 +16,7 @@
 
 /**
  * AuthenticationService 类用于管理用户认证。
- * 包括注册新用户、用户登录、密码加密和解密以及用户信息的存取。
+ * 包括注册新用户、用户登录、密码加密和验证以及用户信息的存取。
  */
 class AuthenticationService {
 public:
