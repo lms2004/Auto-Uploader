@@ -46,7 +46,7 @@ bool AuthenticationService::login(const std::string& username, const std::string
         std::getline(iss, saltStr, ':');
         for (int i = 0; i < saltStr.length() / 2; i++)
         {
-            std::string byteStr = saltStr.substr(2 * i, 2);
+            std::string byteStr = saltStr.substr( 2*i, 2);
             unsigned char byte = (unsigned char)strtol(byteStr.c_str(), nullptr, 16);
             salt[i] = byte;
         }
@@ -142,4 +142,16 @@ std::string hashPassword(const std::string& password)
     }
 
     return hashedPassword;
+}
+
+std::vector<unsigned char> AuthenticationService::generateSalt(size_t length) {
+    // 实现生成盐值的逻辑
+    // 在这里编写代码...
+    return {}; // 返回生成的盐值
+}
+
+std::string AuthenticationService::hashPassword(const std::string& password) {
+    // 实现密码加密的逻辑
+    // 在这里编写代码...
+    return ""; // 返回加密后的密码
 }

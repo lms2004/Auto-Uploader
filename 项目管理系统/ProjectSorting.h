@@ -8,7 +8,6 @@
 #include<string>
 using namespace std;
 
-
 /**
  * Project 类代表一个项目，包含项目的名称、类型和成绩。
  */
@@ -21,17 +20,14 @@ public:
     Project(string& name, string& type, float& grade) :name(name), type(type), grade(grade) {} // 构造函数;
 
     //运算符重载,用于排序;
-    bool operator>(const Project a) {
-
-        if (grade = a.grade)
-            return type < a.type;//若成绩相等,则按类型排序;
+    bool operator>(const Project& a) const { // 应使用引用传递，并且加上 const
+        if (grade == a.grade) // 使用比较操作符 '=='
+            return type < a.type;
         else
-            return grade > a.grade;//若成绩不等,则按成绩排序;
-
+            return grade > a.grade;
     }
+
 };
-
-
 /**
  * ProjectSorting 类提供了项目排序相关的功能。
  */
