@@ -1,8 +1,6 @@
 #include "ProjectSorting.h"
 #include<iostream>
 using namespace std;
-
-
 //根据权重进行成绩修改;
 void ProjectSorting::adjustGradesByTypeWeight(std::vector<Project>& projects, std::unordered_map<std::string, float> typeWeights) {
 	auto project = projects.begin();
