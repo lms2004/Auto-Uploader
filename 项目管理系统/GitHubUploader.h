@@ -39,6 +39,8 @@ public:
      * 开发注意事项：需要确保只删除那些未被上传的项目文件夹，并且在删除之前应该有适当的确认过程或备份机制。
      */
     void deleteRemainingProjectFolders(const std::vector<Project>& projects, const std::string& topFolderPath);
+
+    static std::string outputFolderPath(const std::string& projectName, const std::string& projectType);
 };
 
 #endif // GITHUB_UPLOADER_H
