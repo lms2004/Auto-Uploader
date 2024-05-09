@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <unordered_map>
 #include  <string>
-
 /**
  * Project 类代表一个项目，包含项目的名称、类型和成绩。
  */
