@@ -4,9 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <string>
 #include <unordered_map>
-#include <vector>
+
+//引入使用数据库的库
+#include <mysql.h>
 
 //引入用于密码加密的库
 #include <openssl/evp.h> 
@@ -50,9 +51,6 @@ public:
      */
     bool registerUser(const std::string& username, const std::string& password);
 
-private:
-    std::unordered_map<std::string, std::string> users; // 密码哈希的映射到用户名
-
     /**
      * 从文件系统加载用户信息。
      */
@@ -64,14 +62,20 @@ private:
      */
     void saveUsersToFile();
 
+private:
+    std::unordered_map<std::string, std::string> users; // 密码哈希的映射到用户名
 
-    /**
-    * 生成一个随机的盐值，并将其以十六进制的形式返回。
-    * 在密码存储过程中，盐值的作用是增加密码的复杂度。
-    * 使得相同的密码在不同用户之间存储的哈希值也不同，增加了破解的难度。
-    */
-    std::vector<unsigned char> generateSalt(size_t length);
-    
+    ///**
+    // * 从文件系统加载用户信息。
+    // */
+    //void loadUsersFromFile();
+
+    ///**
+    // * 将用户信息保存到文件系统(例如：txt文件)。
+    // * 注意把用户信息以密文形式存储
+    // */
+    //void saveUsersToFile();
+
     /**
      * 对密码进行加密。
      *
