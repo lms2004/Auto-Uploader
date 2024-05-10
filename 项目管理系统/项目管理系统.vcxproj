@@ -98,8 +98,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\Program Files\OpenSSL-Win64\include;E:\Program Files\MySQL\MySQL Server 8.0\include;D:\尹\OpenSSL-Win64\include;D:\mysql\mysql-8.2.0-winx64\include;$(IncludePath);E:\Openssl\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 8.0\include</IncludePath>
-    <LibraryPath>E:\Program Files\OpenSSL-Win64\lib;E:\Program Files\MySQL\MySQL Server 8.0\lib;D:\尹\OpenSSL-Win64\lib;$(LibraryPath);C:\Program Files\MySQL\MySQL Server 8.0\lib;E:\Openssl\OpenSSL-Win64\lib</LibraryPath>
+    <IncludePath>E:\VsCode\libcURL\curl-8.7.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\include;E:\Openssl\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 8.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Program Files\OpenSSL-Win64\lib;E:\Program Files\MySQL\MySQL Server 8.0\lib;D:\尹\OpenSSL-Win64\lib;$(LibraryPath);C:\Program Files\MySQL\MySQL Server 8.0\lib;E:\Openssl\OpenSSL-Win64\lib;E:\VsCode\libcURL\curl-8.7.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;E:\Openssl\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 8.0\include</IncludePath>
@@ -155,16 +155,17 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>C:\Program Files\OpenSSL-Win64\include;C:\Program Files\OpenSSL-Win64\include\openssl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libmysql.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;D:\尹\OpenSSL-Win64\lib\VC\x64\MD;D:\尹\OpenSSL-Win64\lib\VC\x64\MDd;D:\尹\OpenSSL-Win64\lib\VC\x64\MT;D:\尹\OpenSSL-Win64\lib\VC\x64\MTd;D:\mysql\mysql-8.2.0-winx64\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;libssl.lib;libcrypto.lib;libcurl_a_debug.lib;Ws2_32.lib;Wldap32.lib;winmm.lib;Crypt32.lib;Normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;D:\尹\OpenSSL-Win64\lib\VC\x64\MD;D:\尹\OpenSSL-Win64\lib\VC\x64\MDd;D:\尹\OpenSSL-Win64\lib\VC\x64\MT;D:\尹\OpenSSL-Win64\lib\VC\x64\MTd;D:\mysql\mysql-8.2.0-winx64\lib;E:\Openssl\OpenSSL-Win64\lib\VC\x64\MDd</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">

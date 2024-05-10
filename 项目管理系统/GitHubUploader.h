@@ -41,6 +41,41 @@ public:
     void deleteRemainingProjectFolders(const std::vector<Project>& projects, const std::string& topFolderPath);
 
     static std::string outputFolderPath(const std::string& projectName, const std::string& projectType);
+
+    //为实现上传文件到github仓库，需要使用cURL库来进行调用gitAPI，下面为实现cURL库的自动配置
+    void downloadFile(const std::string& url, const std::string& destination) //实现从指定URL下载文件，并将其保存在指定的目的地
+    {
+        std::string command = "curl -o " + destination + " " + url;
+        std::system(command.c_str());
+    }
+
+    void unzipFile(const std::string& zipFile, const std::string& destinationFolder) //实现解压下载的cURL源代码压缩文件到指定的目的地文件夹
+    {
+        std::string command = "unzip " + zipFile + " -d " + destinationFolder;
+        std::system(command.c_str());
+    }
+
+    void runConfigure(const std::string& sourceFolder, const std::string& installPrefix) //实现运行配置脚本，配置cURL库的安装路径
+    {
+        std::string command = "cd " + sourceFolder + " && ./configure --prefix=" + installPrefix;
+        std::system(command.c_str());
+    }
+
+    void setupCurlLibrary(const std::string& curlSourceUrl, const std::string& curlSourceZip,
+        const std::string& destinationFolder, const std::string& installPrefix)
+    {
+        // 下载cURL源代码
+        downloadFile(curlSourceUrl, curlSourceZip);
+
+        // 解压cURL源代码
+        unzipFile(curlSourceZip, destinationFolder);
+
+        // 运行配置脚本
+        runConfigure(destinationFolder, installPrefix);
+
+        std::cout << "cURL source code downloaded, extracted, and configured." << std::endl;
+    }
+
 };
 
 #endif // GITHUB_UPLOADER_H
