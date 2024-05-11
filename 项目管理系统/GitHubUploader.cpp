@@ -8,7 +8,8 @@
 #include <curl/curl.h>
 
 
-std::string GitHubUploader::getTopGradedProjectFolder(const std::vector<Project>& projects) {
+std::string GitHubUploader::getTopGradedProjectFolder(const std::vector<Project>& projects)
+{
     // 实现获取成绩最高的项目文件夹的逻辑
     // 在这里编写代码...
 
@@ -39,11 +40,12 @@ bool GitHubUploader::uploadProjectFolderToGitHub(const std::string& folderPath) 
 
     // 构建 cURL 请求
     CURL* curl = curl_easy_init();
-    if (curl) {
-        // 设置 URL
+    if (curl) 
+    {
+        // 设置 URL，用于发送上传文件的请求
         curl_easy_setopt(curl, CURLOPT_URL, apiUrl.c_str());
 
-        // 设置 HTTP 请求头
+        // 设置 HTTP 请求头，包含了个人访问令牌来进行身份验证
         struct curl_slist* headers = NULL;
         headers = curl_slist_append(headers, ("Authorization: token " + accessToken).c_str());
         headers = curl_slist_append(headers, "Content-Type: application/json");
@@ -54,7 +56,7 @@ bool GitHubUploader::uploadProjectFolderToGitHub(const std::string& folderPath) 
 
         // 设置 POST 数据
         std::string postData = "{\"path\": \"" + folderPath + "\", \"message\": \"Upload folder\", \"content\": \"\", \"branch\": \"main\"}";
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());  //构建了一个 JSON 数据对象，其中包含了要上传的文件夹路径、提交信息和分支信息。
 
         // 发送请求
         CURLcode res = curl_easy_perform(curl);

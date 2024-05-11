@@ -8,7 +8,11 @@
 /**
  * GitHubUploader 类负责处理与GitHub相关的上传操作。
  */
-class GitHubUploader {
+class GitHubUploader
+{
+
+    bool curlConfigured; // 表示是否已经配置过 cURL 库
+
 public:
     /**
      * 获取成绩最高的项目文件夹。
@@ -74,8 +78,30 @@ public:
         runConfigure(destinationFolder, installPrefix);
 
         std::cout << "cURL source code downloaded, extracted, and configured." << std::endl;
+
+        curlConfigured = true;//增加了返回值来表示配置成功
     }
 
+    GitHubUploader() : curlConfigured(false) {} // 构造函数初始化
+
+    // 检查是否已经配置过 cURL 库
+    bool isCurlConfigured() 
+    {
+        // 如果 curlConfigured 标志已经为 true，直接返回
+        if (curlConfigured)
+            return true;
+
+        // 检查 cURL 头文件是否存在，如果存在则认为 cURL 库已经配置过
+        if (std::filesystem::exists("/path/to/your/project/curl/include/curl/curl.h")) 
+        {
+            curlConfigured = true; // 设置标志为 true，表示 cURL 库已经配置过
+            return true;
+        }
+
+        return false; // 如果文件不存在，则表示 cURL 库尚未配置过
+    }
+
+    
 };
 
 #endif // GITHUB_UPLOADER_H
