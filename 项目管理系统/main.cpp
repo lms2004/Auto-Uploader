@@ -8,6 +8,9 @@ int main() {
 	// 创建一个AuthenticationService对象
 	AuthenticationService authService;
 
+	//创建一个GitHubUploader对象
+	GitHubUploader Uploader;
+
 	// 加载用户信息到内存中的哈希表
 	authService.loadUsersFromFile();
 
@@ -33,6 +36,24 @@ int main() {
 
 	// 保存用户信息到文件和数据库
 	authService.saveUsersToFile();
+
+	if (Uploader.isCurlConfigured()) 
+	{
+		std::cout << "cURL库已经配置过，无需重复配置。" << std::endl;
+	}
+	else
+	{
+		std::cout << "cURL库尚未配置。" << std::endl;
+		// 进行 cURL 库的配置...
+
+		// 下载、解压和配置 cURL 库--用于GitHubUploader.cpp中
+		std::string curlSourceUrl = "https://curl.se/download/curl-7.82.0.zip";//cURL源代码下载链接
+		std::string curlSourceZip = "curl-7.82.0.zip";//定义压缩文件名称
+		std::string destinationFolder = "curl";//定义存放解压后cURL库的文件夹名称
+		std::string installPrefix = "/path/to/your/project/curl"; // cURL库的安装路径（可修改）
+		// 设置 cURL 库
+		Uploader.setupCurlLibrary(curlSourceUrl, curlSourceZip, destinationFolder, installPrefix);
+	}
 
 	return 0;
 }
