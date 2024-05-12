@@ -47,8 +47,8 @@ int main() {
 		// 进行 cURL 库的配置...
 
 		// 下载、解压和配置 cURL 库--用于GitHubUploader.cpp中
-		std::string curlSourceUrl = "https://curl.se/download/curl-7.82.0.zip";//cURL源代码下载链接
-		std::string curlSourceZip = "curl-7.82.0.zip";//定义压缩文件名称
+		std::string curlSourceUrl = "https://curl.se/download/curl-8.7.1.zip";//cURL源代码下载链接
+		std::string curlSourceZip = "curl-8.7.1.zip";//定义压缩文件名称
 		std::string destinationFolder = "curl";//定义存放解压后cURL库的文件夹名称
 		std::string installPrefix = "/path/to/your/project/curl"; // cURL库的安装路径（可修改）
 		// 设置 cURL 库
