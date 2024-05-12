@@ -98,8 +98,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\VsCode\libcURL\curl-8.7.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\include;E:\Openssl\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 8.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Program Files\OpenSSL-Win64\lib;E:\Program Files\MySQL\MySQL Server 8.0\lib;D:\尹\OpenSSL-Win64\lib;$(LibraryPath);C:\Program Files\MySQL\MySQL Server 8.0\lib;E:\Openssl\OpenSSL-Win64\lib;E:\VsCode\libcURL\curl-8.7.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\lib</LibraryPath>
+    <IncludePath>E:\VsCode\libcURL\curl-8.7.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\include;E:\Openssl\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 8.0\include;E:\Qt\Qt7.1\6.7.0\msvc2019_64\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Program Files\OpenSSL-Win64\lib;E:\Program Files\MySQL\MySQL Server 8.0\lib;D:\尹\OpenSSL-Win64\lib;$(LibraryPath);C:\Program Files\MySQL\MySQL Server 8.0\lib;E:\Openssl\OpenSSL-Win64\lib;E:\VsCode\libcURL\curl-8.7.1\builds\libcurl-vc17-x64-debug-static-ipv6-sspi-schannel\lib;E:\Qt\Qt7.1\6.7.0\msvc2019_64\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;E:\Openssl\OpenSSL-Win64\include;C:\Program Files\MySQL\MySQL Server 8.0\include</IncludePath>
@@ -158,14 +158,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Program Files\OpenSSL-Win64\include;C:\Program Files\OpenSSL-Win64\include\openssl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\OpenSSL-Win64\include;C:\Program Files\OpenSSL-Win64\include\openssl;E:\CodeLib\OpenCV\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libmysql.lib;libssl.lib;libcrypto.lib;libcurl_a_debug.lib;Ws2_32.lib;Wldap32.lib;winmm.lib;Crypt32.lib;Normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;D:\尹\OpenSSL-Win64\lib\VC\x64\MD;D:\尹\OpenSSL-Win64\lib\VC\x64\MDd;D:\尹\OpenSSL-Win64\lib\VC\x64\MT;D:\尹\OpenSSL-Win64\lib\VC\x64\MTd;D:\mysql\mysql-8.2.0-winx64\lib;E:\Openssl\OpenSSL-Win64\lib\VC\x64\MDd</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;libssl.lib;libcrypto.lib;libcurl_a_debug.lib;Ws2_32.lib;Wldap32.lib;winmm.lib;Crypt32.lib;Normaliz.lib;Qt6Widgetsd.lib;Qt6Widgets.lib;Qt6Guid.lib;Qt6Gui.lib;Qt6Cored.lib;Qt6Core.lib;opencv_core490d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;D:\尹\OpenSSL-Win64\lib\VC\x64\MD;D:\尹\OpenSSL-Win64\lib\VC\x64\MDd;D:\尹\OpenSSL-Win64\lib\VC\x64\MT;D:\尹\OpenSSL-Win64\lib\VC\x64\MTd;D:\mysql\mysql-8.2.0-winx64\lib;E:\Openssl\OpenSSL-Win64\lib\VC\x64\MDd;E:\CodeLib\OpenCV\opencv\build\x64\vc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
