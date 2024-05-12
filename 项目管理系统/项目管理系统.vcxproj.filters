@@ -54,4 +54,7 @@
   <ItemGroup>
     <Text Include="userdata.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MainWindow.ui" />
+  </ItemGroup>
 </Project>
