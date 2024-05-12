@@ -1,5 +1,7 @@
 #include "Authentication.h"
 
+unsigned char salt[50] = "Gk4^r8@qF0o!Z3Vb$2y$10$V5F9zgYjZLZ1%sZ3Zq5u8Nw8e";
+
 AuthenticationService::AuthenticationService()
 {
     MYSQL mysql;
@@ -42,7 +44,7 @@ bool AuthenticationService::login(const std::string& username, const std::string
     std::string hashedPasswordWithSalt = it->second;
     size_t delimiterPos = hashedPasswordWithSalt.find(':');
     std::string storedHash = hashedPasswordWithSalt.substr(0, delimiterPos);
-    
+
     //unsigned char salt[17] = "Gk4^r8@qF0o!Z3Vb";
     unsigned char hash[SHA256_DIGEST_LENGTH];
     EVP_MD_CTX* ctx = EVP_MD_CTX_new();
@@ -121,4 +123,3 @@ std::string AuthenticationService::hashPassword(const std::string& password)
 
     return hashedPassword;
 }
-
