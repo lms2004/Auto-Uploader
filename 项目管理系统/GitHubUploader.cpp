@@ -17,7 +17,7 @@ std::string GitHubUploader::getTopGradedProjectFolder(const std::vector<Project>
     auto maxGradeProject = std::max_element(projects.begin(), projects.end(),
         [](const Project& a, const Project& b)
         {
-            return a > b;
+            return a.grade > b.grade;
         }
     );
 
