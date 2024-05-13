@@ -8,7 +8,7 @@ int main() {
     AuthenticationService authService;
 
     // 注册新用户
-    std::string username = "tom";
+    std::string username = "tim";
     std::string password = "password123";
     if (authService.registerUser(username, password)) {
         std::cout << "用户注册成功！" << std::endl;
@@ -18,7 +18,7 @@ int main() {
     }
 
     // 用户登录
-    std::string loginUsername = "tom";
+    std::string loginUsername = "tim";
     std::string loginPassword = "password123";
     if (authService.login(loginUsername, loginPassword)) {
         std::cout << "用户登录成功！" << std::endl;
