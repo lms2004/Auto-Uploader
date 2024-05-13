@@ -6,18 +6,6 @@
 #include <iostream>
 #include <fstream>
 
-/**
- * Project 类表示一个项目，包含项目的基本信息。
- */
-class Project {
-public:
-    std::string name; // 项目名称
-    std::string projectName; // 对应的项目名
-    float grade; // 项目成绩
-
-    Project(const std::string& name, const std::string& projectName, float grade)
-        : name(name), projectName(projectName), grade(grade) {}
-};
 
 /**
  * ProjectManagement 类提供了项目管理功能，包括项目文件的浅拷贝、删除项目文件夹以及成绩管理。
