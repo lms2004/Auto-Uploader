@@ -22,7 +22,7 @@ void AuthenticationService::checkAndCreateDatabase()
         return;
     }
 
-    if (mysql_real_connect(mysql, "127.0.0.1", "root", "123456", nullptr, 3306, nullptr, 0) == nullptr) {
+    if (mysql_real_connect(mysql, "127.0.0.1", "root", database_password, nullptr, 3306, nullptr, 0) == nullptr) {
         printf("连接数据库失败: %s\n", mysql_error(mysql));
         mysql_close(mysql);
         return;
@@ -219,7 +219,7 @@ MYSQL* AuthenticationService::connectDB()
         return nullptr;
     }
 
-    if (mysql_real_connect(mysql, "127.0.0.1", "root", "123456", "data", 3306, nullptr, 0) == nullptr) {
+    if (mysql_real_connect(mysql, "127.0.0.1", "root", "database_password", "data", 3306, nullptr, 0) == nullptr) {
         printf("连接数据库失败: %s\n", mysql_error(mysql));
         mysql_close(mysql);
         return nullptr;

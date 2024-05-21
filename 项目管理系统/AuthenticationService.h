@@ -78,6 +78,8 @@ private:
      * 检查并创建数据库和表。
      */
     void checkAndCreateDatabase();
+
+    char database_password[10] = "123456";
 };
 
 #endif // AUTHENTICATION_SERVICE_H
