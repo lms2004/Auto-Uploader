@@ -1,171 +1,76 @@
-
-//#include "Authentication.h"
-
-//// 构造函数，负责从存储中加载用户数据
-//AuthenticationService::AuthenticationService()
-//{
-//    // 从文件加载用户数据到无序表
-//    std::ifstream file("userdata.txt");
-//    if (file.is_open())
-//    {
-//        std::string username;
-//        std::string password;
-//        while (file >> username >> password)
-//        {
-//            users[username] = password;
-//        }
-//        file.close();
-//    }
-//}
-//
-//// 析构函数,负责将用户数据保存到存储中
-//AuthenticationService::~AuthenticationService()
-//{
-//    // 将无序表中的用户数据保存到文件中
-//    std::ofstream file("userdata.txt");
-//    if (file.is_open())
-//    {
-//        for (const auto& user : users)
-//        {
-//            file << user.first << " " << user.second << std::endl;
-//        }
-//        file.close();
-//    }
-//}
-//
-//// 用于验证用户登录
-//bool AuthenticationService::login(const std::string& username, const std::string& password)
-//{
-//    auto it = users.find(username);
-//    if (it == users.end())
-//    {
-//        // 用户不存在，直接返回 false
-//        return false;
-//    }
-//
-//    // 用户存在，检查密码
-//    std::string hashedPassword = it->second;
-//    std::vector<unsigned char> salt(SHA256_DIGEST_LENGTH);
-//    std::string saltStr;
-//    std::istringstream iss(hashedPassword);
-//    std::getline(iss, saltStr, ':');
-//    for (int i = 0; i < saltStr.length() / 2; i++)
-//    {
-//        std::string byteStr = saltStr.substr(2 * i, 2);
-//        unsigned char byte = (unsigned char)strtol(byteStr.c_str(), nullptr, 16);
-//        salt[i] = byte;
-//    }
-//
-//    EVP_MD_CTX* ctx = EVP_MD_CTX_new();
-//    EVP_DigestInit(ctx, EVP_sha256());
-//    EVP_DigestUpdate(ctx, password.c_str(), password.length());
-//    EVP_DigestUpdate(ctx, salt.data(), salt.size());
-//    unsigned char hash[SHA256_DIGEST_LENGTH];
-//    EVP_DigestFinal(ctx, hash, nullptr);
-//    EVP_MD_CTX_free(ctx);
-//
-//    std::string hashedInputPassword;
-//    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-//    {
-//        char buf[3];
-//        sprintf_s(buf, "%02x", hash[i]);
-//        hashedInputPassword += buf;
-//    }
-//    return hashedInputPassword == saltStr.substr(saltStr.find(':') + 1);
-//}
-//
-//// 用于注册新用户
-//bool AuthenticationService::registerUser(const std::string& username, const std::string& password)
-//{
-//    if (users.find(username) == users.end())
-//    {
-//        std::string hashedPassword = hashPassword(password);
-//        users[username] = hashedPassword;
-//        saveUsersToFile();
-//        return true;
-//    }
-//    return false;
-//}
-//
-//// 从名为 userdata.txt 的文件中加载用户信息到内存中的 users 哈希表中
-//void AuthenticationService::loadUsersFromFile()
-//{
-//    std::ifstream file("userdata.txt");
-//    std::string line;
-//    while (std::getline(file, line))
-//    {
-//        std::istringstream iss(line);
-//        std::string username;
-//        std::string hashedPassword;
-//        if (std::getline(iss, username, ':') && std::getline(iss, hashedPassword))
-//        {
-//            users[username] = hashedPassword;
-//        }
-//    }
-//}
-//
-//// 将内存中的用户信息保存到名为 userdata.txt 的文件中
-//void AuthenticationService::saveUsersToFile()
-//{
-//    std::ofstream file("userdata.txt");
-//    for (const auto& pair : users)
-//    {
-//        file << pair.first << ":" << pair.second << std::endl;
-//    }
-//}
-//
-//// 哈希算法加密
-//std::string AuthenticationService::hashPassword(const std::string& password)
-//{
-//    unsigned char salt[SHA256_DIGEST_LENGTH];
-//    RAND_bytes(salt, sizeof(salt));
-//
-//    unsigned char hash[SHA256_DIGEST_LENGTH];
-//    EVP_MD_CTX* ctx = EVP_MD_CTX_new();
-//    EVP_DigestInit(ctx, EVP_sha256());
-//    EVP_DigestUpdate(ctx, (const unsigned char*)password.c_str(), password.length());
-//    EVP_DigestUpdate(ctx, salt, sizeof(salt));
-//    EVP_DigestFinal(ctx, hash, nullptr);
-//    EVP_MD_CTX_free(ctx);
-//
-//    std::string hashedPassword;
-//    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-//    {
-//        char buf[3];
-//        sprintf_s(buf, "%02x", hash[i]);
-//        hashedPassword += buf;
-//    }
-//
-//    hashedPassword += ":";
-//    for (int i = 0; i < sizeof(salt); i++)
-//    {
-//        char buf[3];
-//        sprintf_s(buf, "%02x", salt[i]);
-//        hashedPassword += buf;
-//    }
-//
-//    return hashedPassword;
-//}
-
-#include "Authentication.h"
+#include "AuthenticationService.h"
 
 // 构造函数，负责从数据库加载用户数据
 AuthenticationService::AuthenticationService()
 {
-    // 从数据库加载用户数据到哈希表
-    MYSQL mysql;
-    mysql_init(&mysql);
-    if (mysql_real_connect(&mysql, "127.0.0.1", "root", "root", "test", 3306, NULL, 0) == NULL) {
-        printf("连接数据库失败: %s\\n", mysql_error(&mysql));
-        exit(-1);
+    checkAndCreateDatabase();
+    loadUsersFromDB();
+}
+
+// 析构函数,负责将用户数据保存到数据库中
+AuthenticationService::~AuthenticationService()
+{
+    saveUsersToDB();
+}
+
+// 检查并创建数据库和表
+void AuthenticationService::checkAndCreateDatabase()
+{
+    MYSQL* mysql = mysql_init(nullptr);
+    if (mysql == nullptr) {
+        printf("mysql_init() 失败\n");
+        return;
     }
 
-    if (mysql_query(&mysql, "SELECT username, hashed_password, salt FROM users;") != 0) {
-        printf("查询数据库失败: %s\\n", mysql_error(&mysql));
-        exit(-1);
+    if (mysql_real_connect(mysql, "127.0.0.1", "root", "123456", nullptr, 3306, nullptr, 0) == nullptr) {
+        printf("连接数据库失败: %s\n", mysql_error(mysql));
+        mysql_close(mysql);
+        return;
     }
 
-    MYSQL_RES* res = mysql_store_result(&mysql);
+    // 创建数据库
+    if (mysql_query(mysql, "CREATE DATABASE IF NOT EXISTS data;") != 0) {
+        printf("创建数据库失败: %s\n", mysql_error(mysql));
+        mysql_close(mysql);
+        return;
+    }
+
+    // 连接到创建的数据库
+    if (mysql_select_db(mysql, "data") != 0) {
+        printf("选择数据库失败: %s\n", mysql_error(mysql));
+        mysql_close(mysql);
+        return;
+    }
+
+    // 创建表
+    const char* createTableQuery = R"(
+        CREATE TABLE IF NOT EXISTS users (
+            username VARCHAR(20) NOT NULL,
+            hashed_password VARCHAR(128) NOT NULL,
+            salt VARCHAR(100) NOT NULL,
+            PRIMARY KEY (username)
+        );
+    )";
+    if (mysql_query(mysql, createTableQuery) != 0) {
+        printf("创建表失败: %s\n", mysql_error(mysql));
+    }
+
+    mysql_close(mysql);
+}
+
+// 从数据库加载用户数据到哈希表
+void AuthenticationService::loadUsersFromDB()
+{
+    MYSQL* mysql = connectDB();
+    if (!mysql) return;
+
+    if (mysql_query(mysql, "SELECT username, hashed_password, salt FROM users;") != 0) {
+        printf("查询数据库失败: %s\n", mysql_error(mysql));
+        mysql_close(mysql);
+        return;
+    }
+
+    MYSQL_RES* res = mysql_store_result(mysql);
     if (res) {
         MYSQL_ROW row;
         while ((row = mysql_fetch_row(res))) {
@@ -174,130 +79,99 @@ AuthenticationService::AuthenticationService()
         mysql_free_result(res);
     }
 
-    mysql_close(&mysql);
+    mysql_close(mysql);
 }
 
-// 析构函数,负责将用户数据保存到存储中
-AuthenticationService::~AuthenticationService()
+// 将用户数据保存到数据库中
+void AuthenticationService::saveUsersToDB()
 {
-    // 将无序表中的用户数据保存到文件中
-    std::ofstream file("userdata.txt");
-    if (file.is_open())
-    {
-        for (const auto& user : users)
-        {
-            file << user.first << " " << user.second << std::endl;
-        }
-        file.close();
+    MYSQL* mysql = connectDB();
+    if (!mysql) return;
+
+    mysql_query(mysql, "DELETE FROM users;");
+
+    for (const auto& pair : users) {
+        size_t delimiterPos = pair.second.find(':');
+        std::string hashedPassword = pair.second.substr(0, delimiterPos);
+        std::string salt = pair.second.substr(delimiterPos + 1);
+        std::string query = "INSERT INTO users (username, hashed_password, salt) VALUES ('" + pair.first + "', '" + hashedPassword + "', '" + salt + "');";
+        mysql_query(mysql, query.c_str());
     }
+
+    mysql_close(mysql);
 }
 
-// 用于验证用户登录
+// 用户登录
 bool AuthenticationService::login(const std::string& username, const std::string& password)
 {
     auto it = users.find(username);
-    if (it == users.end())
-    {
+    if (it == users.end()) {
+        std::cout << "用户不存在\n";
         return false;
     }
 
     std::string hashedPasswordWithSalt = it->second;
     size_t delimiterPos = hashedPasswordWithSalt.find(':');
-    if (delimiterPos == std::string::npos)
-    {
-        return false; // 错误的哈希格式
+    if (delimiterPos == std::string::npos) {
+        std::cout << "无效的哈希格式\n";
+        return false;
     }
 
     std::string hashedPassword = hashedPasswordWithSalt.substr(0, delimiterPos);
-    std::string salt = hashedPasswordWithSalt.substr(delimiterPos + 1);
+    std::string saltString = hashedPasswordWithSalt.substr(delimiterPos + 1);
 
-    // 重新计算哈希值
+    unsigned char salt[SHA256_DIGEST_LENGTH];
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        std::string byteString = saltString.substr(i * 2, 2);
+        salt[i] = (unsigned char)strtol(byteString.c_str(), nullptr, 16);
+    }
+
     unsigned char hash[SHA256_DIGEST_LENGTH];
     EVP_MD_CTX* ctx = EVP_MD_CTX_new();
     EVP_DigestInit(ctx, EVP_sha256());
     EVP_DigestUpdate(ctx, (const unsigned char*)password.c_str(), password.length());
-    EVP_DigestUpdate(ctx, (const unsigned char*)salt.c_str(), salt.length());
+    EVP_DigestUpdate(ctx, salt, sizeof(salt));
     EVP_DigestFinal(ctx, hash, nullptr);
     EVP_MD_CTX_free(ctx);
 
     std::string computedHashedPassword;
-    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-    {
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
         char buf[3];
-        sprintf_s(buf, "%02x", hash[i]);
+        sprintf(buf, "%02x", hash[i]);
         computedHashedPassword += buf;
     }
 
-    // 比较哈希值
+    std::cout << "computedHashedPassword: " << computedHashedPassword << "\n";
+    std::cout << "stored hashedPassword: " << hashedPassword << "\n";
+
     return computedHashedPassword == hashedPassword;
 }
 
-// 用于注册新用户
+
+// 注册新用户
 bool AuthenticationService::registerUser(const std::string& username, const std::string& password)
 {
-    if (users.find(username) == users.end())
-    {
+    if (users.find(username) == users.end()) {
         std::string hashedPassword = hashPassword(password);
         users[username] = hashedPassword;
 
-        // 将用户信息插入数据库
-        MYSQL mysql;
-        mysql_init(&mysql);
-        if (mysql_real_connect(&mysql, "127.0.0.1", "root", "root", "test", 3306, NULL, 0) == NULL) {
-            printf("连接数据库失败: %s\\\\n", mysql_error(&mysql));
-            exit(-1);
+        MYSQL* mysql = connectDB();
+        if (!mysql) return false;
+
+        size_t delimiterPos = hashedPassword.find(':');
+        std::string hashed = hashedPassword.substr(0, delimiterPos);
+        std::string salt = hashedPassword.substr(delimiterPos + 1);
+        std::string query = "INSERT INTO users (username, hashed_password, salt) VALUES ('" + username + "', '" + hashed + "', '" + salt + "');";
+        if (mysql_query(mysql, query.c_str()) != 0) {
+            printf("插入数据失败: %s\n", mysql_error(mysql));
+            mysql_close(mysql);
+            return false;
         }
 
-        std::string query = "INSERT INTO users (username, hashed_password, salt) VALUES ('" + username + "', '" + hashedPassword + "');";
-        if (mysql_query(&mysql, query.c_str()) != 0) {
-            printf("插入数据失败: %s\\\\n", mysql_error(&mysql));
-            exit(-1);
-        }
-
-        mysql_close(&mysql);
+        mysql_close(mysql);
         return true;
     }
     return false;
-}
-
-// 从名为 userdata.txt 的文件中加载用户信息到内存中的 users 哈希表中
-void AuthenticationService::loadUsersFromFile()
-{
-    std::ifstream file("userdata.txt");
-    std::string line;
-    while (std::getline(file, line))
-    {
-        std::istringstream iss(line);
-        std::string username;
-        std::string hashedPassword;
-        if (std::getline(iss, username, ':') && std::getline(iss, hashedPassword))
-        {
-            users[username] = hashedPassword;
-        }
-    }
-}
-
-// 将内存中的用户信息保存到数据库
-void AuthenticationService::saveUsersToFile()
-{
-    MYSQL mysql;
-    mysql_init(&mysql);
-    if (mysql_real_connect(&mysql, "127.0.0.1", "root", "root", "test", 3306, NULL, 0) == NULL) {
-        printf("连接数据库失败: %s\\n", mysql_error(&mysql));
-        exit(-1);
-    }
-
-    // 删除原有数据
-    mysql_query(&mysql, "DELETE FROM users;");
-
-    // 插入新数据
-    for (const auto& pair : users)
-    {
-        std::string query = "INSERT INTO users (username, hashed_password, salt) VALUES ('" + pair.first + "', '" + pair.second + "');";
-        mysql_query(&mysql, query.c_str());
-    }
-
-    mysql_close(&mysql);
 }
 
 // 哈希算法加密
@@ -315,20 +189,41 @@ std::string AuthenticationService::hashPassword(const std::string& password)
     EVP_MD_CTX_free(ctx);
 
     std::string hashedPassword;
-    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-    {
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
         char buf[3];
-        sprintf_s(buf, "%02x", hash[i]);
+        sprintf(buf, "%02x", hash[i]);
         hashedPassword += buf;
     }
 
-    hashedPassword += ":";
-    for (int i = 0; i < sizeof(salt); i++)
-    {
+    std::string saltString;
+    for (int i = 0; i < sizeof(salt); i++) {
         char buf[3];
-        sprintf_s(buf, "%02x", salt[i]);
-        hashedPassword += buf;
+        sprintf(buf, "%02x", salt[i]);
+        saltString += buf;
     }
 
-    return hashedPassword;
+    std::string hashedPasswordWithSalt = hashedPassword + ":" + saltString;
+
+    std::cout << "hashedPassword: " << hashedPasswordWithSalt << "\n";
+
+    return hashedPasswordWithSalt;
+}
+
+
+// 数据库连接
+MYSQL* AuthenticationService::connectDB()
+{
+    MYSQL* mysql = mysql_init(nullptr);
+    if (mysql == nullptr) {
+        printf("mysql_init() 失败\n");
+        return nullptr;
+    }
+
+    if (mysql_real_connect(mysql, "127.0.0.1", "root", "123456", "data", 3306, nullptr, 0) == nullptr) {
+        printf("连接数据库失败: %s\n", mysql_error(mysql));
+        mysql_close(mysql);
+        return nullptr;
+    }
+
+    return mysql;
 }

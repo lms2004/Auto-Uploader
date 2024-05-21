@@ -18,10 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Authentication.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectManament.h">
+    <ClInclude Include="AuthenticationService.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ProjectSorting.h">
@@ -31,6 +28,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DocumentService.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,10 +44,10 @@
     <ClCompile Include="Authentivation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectManagement.cpp">
+    <ClCompile Include="GitHubUploader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="GitHubUploader.cpp">
+    <ClCompile Include="DocumentService.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

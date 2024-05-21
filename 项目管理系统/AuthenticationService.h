@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #ifndef AUTHENTICATION_SERVICE_H
 #define AUTHENTICATION_SERVICE_H
 
@@ -5,15 +7,10 @@
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
-
-//引入使用数据库的库
 #include <mysql.h>
-
-//引入用于密码加密的库
-#include <openssl/evp.h> 
-#include <openssl/rand.h> 
+#include <openssl/evp.h>
+#include <openssl/rand.h>
 #include <openssl/sha.h>
-
 
 /**
  * AuthenticationService 类用于管理用户认证。
@@ -23,13 +20,13 @@ class AuthenticationService {
 public:
     /**
      * 构造函数。
-     * 负责从存储中加载用户数据。（就是在这个函数中获取文件中的数据，然后存储到无序表users里）
+     * 负责从数据库中加载用户数据。
      */
     AuthenticationService();
 
     /**
      * 析构函数。
-     * 负责将用户数据保存到存储中。（就是在这个函数中把无序表users文件中的数据存储到文件里）
+     * 负责将用户数据保存到数据库中。
      */
     ~AuthenticationService();
 
@@ -51,30 +48,18 @@ public:
      */
     bool registerUser(const std::string& username, const std::string& password);
 
-    /**
-     * 从文件系统加载用户信息。
-     */
-    void loadUsersFromFile();
-
-    /**
-     * 将用户信息保存到文件系统(例如：txt文件)。
-     * 注意把用户信息以密文形式存储
-     */
-    void saveUsersToFile();
-
 private:
     std::unordered_map<std::string, std::string> users; // 密码哈希的映射到用户名
 
-    ///**
-    // * 从文件系统加载用户信息。
-    // */
-    //void loadUsersFromFile();
+    /**
+     * 从数据库加载用户信息。
+     */
+    void loadUsersFromDB();
 
-    ///**
-    // * 将用户信息保存到文件系统(例如：txt文件)。
-    // * 注意把用户信息以密文形式存储
-    // */
-    //void saveUsersToFile();
+    /**
+     * 将用户信息保存到数据库。
+     */
+    void saveUsersToDB();
 
     /**
      * 对密码进行加密。
@@ -84,6 +69,15 @@ private:
      */
     std::string hashPassword(const std::string& password);
 
+    /**
+     * 数据库连接信息
+     */
+    MYSQL* connectDB();
+
+    /**
+     * 检查并创建数据库和表。
+     */
+    void checkAndCreateDatabase();
 };
 
 #endif // AUTHENTICATION_SERVICE_H

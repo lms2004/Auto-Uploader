@@ -223,7 +223,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Authentication.h">
+    <ClInclude Include="AuthenticationService.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -231,8 +231,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="DocumentService.h" />
     <ClInclude Include="GitHubUploader.h" />
-    <ClInclude Include="ProjectManament.h" />
     <ClInclude Include="ProjectSorting.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -245,9 +245,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="DocumentService.cpp" />
     <ClCompile Include="GitHubUploader.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ProjectManagement.cpp" />
     <ClCompile Include="ProjectSorting.cpp" />
   </ItemGroup>
   <ItemGroup>
